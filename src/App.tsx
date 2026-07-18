@@ -1,17 +1,20 @@
-import { Header } from './components/Header';
+import { BrowserRouter, Routes, Route } from 'react-router';
+import { MainLayout } from './components/MainLayout';
+import { DashboardPage } from './pages/DashboardPage';
+import { ClientsPage } from './pages/ClientsPage';
+import { ServiceOrdersPage } from './pages/ServiceOrdersPage';
 
 export const App = () => {
   return (
-    <div className="min-h-screen bg-zinc-100">
-      <Header />
-      <main className="p-6">
-        <h2 className="text-lg font-bold text-zinc-700 mb-4">
-          Ordens de Serviço
-        </h2>
-        <p className="text-zinc-500 text-sm">
-          Em breve: dados carregados da API via React Router.
-        </p>
-      </main>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<DashboardPage />} />
+          <Route path="/clients" element={<ClientsPage />} />
+          <Route path="/service-orders" element={<ServiceOrdersPage />} />
+          <Route path="*" element={<h1>Página não encontrada 💔</h1>} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 };
