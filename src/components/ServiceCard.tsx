@@ -1,4 +1,4 @@
-import type { OrdemServico } from '../types/OrdemServico';
+import type { OrdemServico } from '../types/serviceOrder';
 
 interface ServiceCardProps {
   ordem: OrdemServico;

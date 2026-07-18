@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Header } from './components/Header';
 import { ServiceCard } from './components/ServiceCard';
 import { NewServiceForm } from './components/NewServiceForm';
-import type { OrdemServico } from './types/OrdemServico';
+import type { OrdemServico } from './types/serviceOrder';
 
 export function App() {
   const [ordens, setOrdens] = useState<OrdemServico[]>([]);

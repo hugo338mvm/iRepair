@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { OrdemServico, StatusOS } from '../types/OrdemServico';
+import type { OrdemServico, StatusOS } from '../types/serviceOrder';
 
 interface NewServiceFormProps {
   onAdicionar: (novaOrdem: OrdemServico) => void;
