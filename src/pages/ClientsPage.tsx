@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getAllClients, createClient } from '../services/clientService';
+import { getAllClients, createClient, deleteClient } from '../services/clientService';
 import type { Client } from '../types';
 
 export const ClientsPage = () => {
@@ -38,6 +38,11 @@ export const ClientsPage = () => {
     setName('');
     setPhone('');
     setEmail('');
+  }
+
+  async function handleDelete(id: number) {
+    await deleteClient(id);
+    setClients(clients.filter((client) => client.id !== id));
   }
 
   if (isLoading) return <p className="text-zinc-500">Carregando clientes...</p>;
@@ -89,6 +94,12 @@ export const ClientsPage = () => {
             <h3 className="font-bold text-zinc-800">{client.name}</h3>
             <p className="text-sm text-zinc-600">{client.phone}</p>
             <p className="text-sm text-zinc-600">{client.email}</p>
+            <button
+              onClick={() => handleDelete(client.id)}
+              className="mt-2 text-xs text-red-600 hover:underline"
+            >
+              Excluir
+            </button>          
           </div>
         ))}
       </div>
