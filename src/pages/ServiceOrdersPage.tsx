@@ -3,6 +3,7 @@ import {
   getAllServiceOrders,
   createServiceOrder,
   deleteServiceOrder,
+  updateServiceOrder,
 } from '../services/serviceOrderService';
 import { getAllClients } from '../services/clientService';
 import type { Client, ServiceOrder, ServiceOrderStatus } from '../types';
@@ -59,15 +60,20 @@ export const ServiceOrdersPage = () => {
   setOrders(orders.filter((order) => order.id !== id));
   }
 
+  async function handleStatusChange(order: ServiceOrder, newStatus: ServiceOrderStatus) {
+  const updatedOrder = await updateServiceOrder(order.id, {
+    clientId: order.client_id,
+    device: order.device,
+    issue: order.issue,
+    status: newStatus,
+  });
+
+  setOrders(orders.map((o) => (o.id === updatedOrder.id ? updatedOrder : o)));
+  }
+
   function getClientName(clientIdValue: number) {
     const client = clients.find((c) => c.id === clientIdValue);
     return client ? client.name : 'Cliente não encontrado';
-  }
-
-  function statusLabel(status: ServiceOrderStatus) {
-    if (status === 'open') return 'Aberto';
-    if (status === 'in_progress') return 'Em Andamento';
-    return 'Finalizado';
   }
 
   function statusClasses(status: ServiceOrderStatus) {
@@ -129,11 +135,15 @@ export const ServiceOrdersPage = () => {
           >
             <div className="flex justify-between items-start mb-2">
               <h3 className="font-bold text-zinc-800">{order.device}</h3>
-              <span
-                className={`text-xs font-semibold px-2 py-1 rounded-full ${statusClasses(order.status)}`}
+              <select
+                value={order.status}
+                onChange={(e) => handleStatusChange(order, e.target.value as ServiceOrderStatus)}
+                className={`text-xs font-semibold px-2 py-1 rounded-full border-none cursor-pointer ${statusClasses(order.status)}`}
               >
-                {statusLabel(order.status)}
-              </span>
+                <option value="open">Aberto</option>
+                <option value="in_progress">Em Andamento</option>
+                <option value="done">Finalizado</option>
+              </select>
             </div>
             <p className="text-sm text-zinc-600">
               <span className="font-medium">Cliente:</span> {getClientName(order.client_id)}
