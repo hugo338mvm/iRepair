@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import {
   getAllServiceOrders,
   createServiceOrder,
+  deleteServiceOrder,
 } from '../services/serviceOrderService';
 import { getAllClients } from '../services/clientService';
 import type { Client, ServiceOrder, ServiceOrderStatus } from '../types';
@@ -51,6 +52,11 @@ export const ServiceOrdersPage = () => {
     setClientId('');
     setDevice('');
     setIssue('');
+  }
+
+  async function handleDelete(id: number) {
+  await deleteServiceOrder(id);
+  setOrders(orders.filter((order) => order.id !== id));
   }
 
   function getClientName(clientIdValue: number) {
@@ -135,6 +141,12 @@ export const ServiceOrdersPage = () => {
             <p className="text-sm text-zinc-600">
               <span className="font-medium">Defeito:</span> {order.issue}
             </p>
+            <button
+              onClick={() => handleDelete(order.id)}
+              className="mt-2 text-xs text-red-600 hover:underline"
+            >
+              Excluir
+            </button>
           </div>
         ))}
       </div>
