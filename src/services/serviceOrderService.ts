@@ -16,3 +16,11 @@ export async function createServiceOrder(
 export async function deleteServiceOrder(id: number): Promise<void> {
   await api.delete(`/service-orders/${id}`);
 }
+
+export async function updateServiceOrder(
+  id: number,
+  data: CreateServiceOrderData
+): Promise<ServiceOrder> {
+  const response = await api.put<ServiceOrder>(`/service-orders/${id}`, data);
+  return response.data;
+}
