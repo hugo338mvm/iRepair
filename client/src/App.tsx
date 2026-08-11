@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router';
 import { AuthProvider } from './context/AuthContext';
 import { PrivateRoute } from './routes/PrivateRoute';
 import { Login } from './pages/Login';
-import { MainLayout } from './layouts/MainLayout';
+import { MainLayout } from './components/MainLayout';
 import { DashboardPage } from './pages/DashboardPage';
 import { ClientsPage } from './pages/ClientsPage';
 import { ServiceOrdersPage } from './pages/ServiceOrdersPage';
